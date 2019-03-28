@@ -5,6 +5,12 @@
     state: restarted
   notify: restart php-fpm
   when: php_enable_webserver
+  register: result
+  until: result.get("changed") == true
+  retries: 10
+  delay: 5
+
+- debug: msg=" value is  {{ result }} "
 
 - name: restart php-fpm
   service:
